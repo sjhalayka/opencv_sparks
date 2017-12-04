@@ -21,6 +21,8 @@ int main(void)
 
 	imshow("thresh", frame);
 
+	vector<Point2i> branch_locations;
+
 	// Start with the second column
 	for (int i = 1; i < frame.cols; i++)
 	{
@@ -64,7 +66,7 @@ int main(void)
 		{
 			begin_end_black_regions.push_back(frame.rows - 1);
 		}
-		else if(255 == frame.at<unsigned char>(frame.rows - 1, i) && lit == false)
+		else if (255 == frame.at<unsigned char>(frame.rows - 1, i) && lit == false)
 		{
 			begin_end_black_regions.push_back(frame.rows - 2);
 		}
@@ -85,11 +87,16 @@ int main(void)
 			if (found_branch == true)
 			{
 				Point2i location(i - 1, begin_end_black_regions[k]);
-
-				circle(frame, location, 2, Scalar(127, 127, 127), 2);
+				branch_locations.push_back(location);
 			}
 		}
 	}
+
+	cvtColor(frame, frame, CV_GRAY2BGR);
+
+	for (size_t i = 0; i < branch_locations.size(); i++)
+		circle(frame, branch_locations[i], 2, Scalar(0, 127, 255), 2);
+
 
 	imshow("frame", frame);
 
