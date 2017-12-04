@@ -9,7 +9,7 @@ using namespace std;
 
 int main(void)
 {
-	Mat frame = imread("sparks.png", CV_LOAD_IMAGE_GRAYSCALE);
+	Mat frame = imread("sparks.png");
 
 	if (frame.empty())
 	{
@@ -17,9 +17,11 @@ int main(void)
 		return -1;
 	}
 
-	threshold(frame, frame, 127, 255, THRESH_BINARY);
+	Mat colour_frame = frame.clone();
 
-	imshow("thresh", frame);
+	cvtColor(frame, frame, CV_BGR2GRAY);
+
+	threshold(frame, frame, 127, 255, THRESH_BINARY);
 
 	vector<Point2i> branch_locations;
 
@@ -92,13 +94,10 @@ int main(void)
 		}
 	}
 
-	cvtColor(frame, frame, CV_GRAY2BGR);
-
 	for (size_t i = 0; i < branch_locations.size(); i++)
-		circle(frame, branch_locations[i], 2, Scalar(0, 127, 255), 2);
+		circle(colour_frame, branch_locations[i], 2, Scalar(255, 127, 0), 2);
 
-
-	imshow("frame", frame);
+	imshow("frame", colour_frame);
 
 	waitKey();
 
