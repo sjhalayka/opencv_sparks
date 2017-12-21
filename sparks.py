@@ -49,9 +49,6 @@ for i in range(1, cols):
     elif 255 == frame[rows - 1, i] and lit == False:
 	end_black_regions.append(rows - 2)
 
-    #print len(begin_black_regions)
-    #print len(end_black_regions)
-
     for k in range(0, len(begin_black_regions)):
         found_branch = True
 
