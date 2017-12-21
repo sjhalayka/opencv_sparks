@@ -16,9 +16,7 @@ ret, frame = cv2.threshold(frame, 127, 255, cv2.THRESH_BINARY)
 rows = frame.shape[0]
 cols = frame.shape[1]
 
-branch_locations_x = []
-branch_locations_y = []
-
+branch_locations = []
 
 # start with second column
 for i in range(1, cols):
@@ -63,13 +61,10 @@ for i in range(1, cols):
                 break
 
         if found_branch == True:
-            location_x = i - 1
-            location_y = begin_black_regions[k]    
-            branch_locations_x.append(location_x)
-            branch_locations_y.append(location_y)
+            branch_locations.append(complex(i - 1, begin_black_regions[k]))
                 
-for i in range(0, len(branch_locations_x)):
-    cv2.circle(colour_frame, (branch_locations_x[i], branch_locations_y[i]), 2, (255, 127, 0), 2)
+for i in range(0, len(branch_locations)):
+    cv2.circle(colour_frame, (int(branch_locations[i].real), int(branch_locations[i].imag)), 2, (255, 127, 0), 2)
 
 cv2.imshow("Frame", colour_frame)
 
