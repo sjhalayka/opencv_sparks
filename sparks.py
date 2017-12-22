@@ -26,7 +26,7 @@ for i in range(1, cols):
 
     # start with first row
     if 255 == frame[0, i]:
-        lit = Frue
+        lit = True
     else:
         lit = False
 	begin_black_regions.append(0)
